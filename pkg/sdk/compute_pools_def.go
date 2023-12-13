@@ -11,7 +11,7 @@ var propertiesToAlter = g.NewQueryStruct("PropertiesToAlter").
 	OptionalNumberAssignment("AUTO_SUSPEND_SECS", g.ParameterOptions().NoQuotes()).
 	OptionalTextAssignment("COMMENT", g.ParameterOptions().SingleQuotes())
 
-var computePoolDbRow = g.DbStruct("computePoolDbRow").
+var computePoolDbRow = g.DbStruct("computePoolDBRow").
 	Field("name", "string").
 	Field("state", "string").
 	Field("min_nodes", "int").
@@ -20,7 +20,7 @@ var computePoolDbRow = g.DbStruct("computePoolDbRow").
 	Field("num_services", "int").
 	Field("num_jobs", "int").
 	Field("auto_suspend_secs", "int").
-	Field("auto_resume", "bool").
+	Field("auto_resume", "bool"). // might need this to be a string, unsure how it's actually returned
 	Field("active_nodes", "int").
 	Field("idle_nodes", "int").
 	Field("created_on", "time.Time").
