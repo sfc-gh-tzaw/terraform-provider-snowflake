@@ -1,16 +1,25 @@
 package sdk
 
-import "testing"
+import (
+	"fmt"
+	"testing"
+)
 
 func TestComputePools_Create(t *testing.T) {
-	id := RandomSchemaObjectIdentifier()
+	id := RandomAccountObjectIdentifier()
 
+	fmt.Println(id.FullyQualifiedName())
 	// Minimal valid CreateComputePoolOptions
 	defaultOpts := func() *CreateComputePoolOptions {
 		return &CreateComputePoolOptions{
-			name: id,
+			name:           id,
+			MinNodes:       1,
+			MaxNodes:       1,
+			InstanceFamily: "standard_1",
 		}
 	}
+
+	sql := "MIN_NODES = 1 MAX_NODES = 1 INSTANCE_FAMILY = standard_1"
 
 	t.Run("validation: nil options", func(t *testing.T) {
 		var opts *CreateComputePoolOptions = nil
@@ -19,14 +28,13 @@ func TestComputePools_Create(t *testing.T) {
 
 	t.Run("validation: valid identifier for [opts.name]", func(t *testing.T) {
 		opts := defaultOpts()
-		// TODO: fill me
+		opts.name = NewSchemaObjectIdentifier("", "", "")
 		assertOptsInvalidJoinedErrors(t, opts, ErrInvalidObjectIdentifier)
 	})
 
 	t.Run("basic", func(t *testing.T) {
 		opts := defaultOpts()
-		// TODO: fill me
-		assertOptsValidAndSQLEquals(t, opts, "TODO: fill me")
+		assertOptsValidAndSQLEquals(t, opts, "CREATE COMPUTE POOL %s %s", id.FullyQualifiedName(), sql)
 	})
 
 	t.Run("all options", func(t *testing.T) {

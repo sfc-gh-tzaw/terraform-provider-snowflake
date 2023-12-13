@@ -50,7 +50,7 @@ var computePool = g.PlainStruct("ComputePool").
 var ComputePoolsDef = g.NewInterface(
 	"ComputePools",
 	"ComputePool",
-	g.KindOfT[SchemaObjectIdentifier](),
+	g.KindOfT[AccountObjectIdentifier](),
 ).CreateOperation(
 	"https://docs.snowflake.com/en/LIMITEDACCESS/snowpark-containers/reference/compute-pool#create-compute-pool",
 	g.NewQueryStruct("CreateComputePool").

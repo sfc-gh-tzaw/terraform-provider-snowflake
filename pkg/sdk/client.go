@@ -32,6 +32,7 @@ type Client struct {
 	Alerts           Alerts
 	ApplicationRoles ApplicationRoles
 	Comments         Comments
+	ComputePools     ComputePools
 	DatabaseRoles    DatabaseRoles
 	Databases        Databases
 	DynamicTables    DynamicTables
@@ -160,6 +161,7 @@ func (c *Client) initialize() {
 	c.Alerts = &alerts{client: c}
 	c.ApplicationRoles = &applicationRoles{client: c}
 	c.Comments = &comments{client: c}
+	c.ComputePools = &computePools{client: c}
 	c.ContextFunctions = &contextFunctions{client: c}
 	c.ConversionFunctions = &conversionFunctions{client: c}
 	c.DatabaseRoles = &databaseRoles{client: c}
