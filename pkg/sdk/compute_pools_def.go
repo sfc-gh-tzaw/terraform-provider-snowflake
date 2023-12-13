@@ -27,7 +27,7 @@ var computePoolDbRow = g.DbStruct("computePoolDBRow").
 	Field("resumed_on", "time.Time").
 	Field("updated_on", "time.Time").
 	Field("owner", "string").
-	Field("comment", "string")
+	Field("comment", "sql.NullString") // this can be null so need to be careful, no idea how to tell ahead of time though
 
 var computePool = g.PlainStruct("ComputePool").
 	Field("Name", "string").

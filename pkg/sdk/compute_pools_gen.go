@@ -2,6 +2,7 @@ package sdk
 
 import (
 	"context"
+	"database/sql"
 	"time"
 )
 
@@ -67,22 +68,22 @@ type ShowComputePoolOptions struct {
 }
 
 type computePoolDBRow struct {
-	Name            string    `db:"name"`
-	State           string    `db:"state"`
-	MinNodes        int       `db:"min_nodes"`
-	MaxNodes        int       `db:"max_nodes"`
-	InstanceFamily  string    `db:"instance_family"`
-	NumServices     int       `db:"num_services"`
-	NumJobs         int       `db:"num_jobs"`
-	AutoSuspendSecs int       `db:"auto_suspend_secs"`
-	AutoResume      bool      `db:"auto_resume"`
-	ActiveNodes     int       `db:"active_nodes"`
-	IdleNodes       int       `db:"idle_nodes"`
-	CreatedOn       time.Time `db:"created_on"`
-	ResumedOn       time.Time `db:"resumed_on"`
-	UpdatedOn       time.Time `db:"updated_on"`
-	Owner           string    `db:"owner"`
-	Comment         string    `db:"comment"`
+	Name            string         `db:"name"`
+	State           string         `db:"state"`
+	MinNodes        int            `db:"min_nodes"`
+	MaxNodes        int            `db:"max_nodes"`
+	InstanceFamily  string         `db:"instance_family"`
+	NumServices     int            `db:"num_services"`
+	NumJobs         int            `db:"num_jobs"`
+	AutoSuspendSecs int            `db:"auto_suspend_secs"`
+	AutoResume      bool           `db:"auto_resume"`
+	ActiveNodes     int            `db:"active_nodes"`
+	IdleNodes       int            `db:"idle_nodes"`
+	CreatedOn       time.Time      `db:"created_on"`
+	ResumedOn       time.Time      `db:"resumed_on"`
+	UpdatedOn       time.Time      `db:"updated_on"`
+	Owner           string         `db:"owner"`
+	Comment         sql.NullString `db:"comment"`
 }
 
 type ComputePool struct {

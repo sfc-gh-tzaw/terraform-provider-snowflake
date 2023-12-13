@@ -38,8 +38,8 @@ func (v *computePools) Show(ctx context.Context, request *ShowComputePoolRequest
 }
 
 func (v *computePools) ShowByID(ctx context.Context, id AccountObjectIdentifier) (*ComputePool, error) {
-	request := NewShowComputePoolRequest().WithLike(&Like{String(id.Name())})
-	computePools, err := v.Show(ctx, request)
+	// TODO: adjust request if e.g. LIKE is supported for the resource
+	computePools, err := v.Show(ctx, NewShowComputePoolRequest())
 	if err != nil {
 		return nil, err
 	}
@@ -111,7 +111,7 @@ func (r *ShowComputePoolRequest) toOpts() *ShowComputePoolOptions {
 
 func (r computePoolDBRow) convert() *ComputePool {
 	// TODO: Mapping - maybe need to change bool <-> string
-	return &ComputePool{
+	computePool := ComputePool{
 		Name:            r.Name,
 		State:           r.State,
 		MinNodes:        r.MinNodes,
@@ -127,8 +127,13 @@ func (r computePoolDBRow) convert() *ComputePool {
 		ResumedOn:       r.ResumedOn,
 		UpdatedOn:       r.UpdatedOn,
 		Owner:           r.Owner,
-		Comment:         r.Comment,
 	}
+
+	if r.Comment.Valid {
+		computePool.Comment = r.Comment.String
+	}
+
+	return &computePool
 }
 
 func (r *DescribeComputePoolRequest) toOpts() *DescribeComputePoolOptions {
