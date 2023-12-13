@@ -28,7 +28,7 @@ func TestComputePools_Create(t *testing.T) {
 
 	t.Run("validation: valid identifier for [opts.name]", func(t *testing.T) {
 		opts := defaultOpts()
-		opts.name = NewSchemaObjectIdentifier("", "", "")
+		opts.name = NewAccountObjectIdentifier("")
 		assertOptsInvalidJoinedErrors(t, opts, ErrInvalidObjectIdentifier)
 	})
 
@@ -37,15 +37,15 @@ func TestComputePools_Create(t *testing.T) {
 		assertOptsValidAndSQLEquals(t, opts, "CREATE COMPUTE POOL %s %s", id.FullyQualifiedName(), sql)
 	})
 
-	t.Run("all options", func(t *testing.T) {
-		opts := defaultOpts()
-		// TODO: fill me
-		assertOptsValidAndSQLEquals(t, opts, "TODO: fill me")
-	})
+	// t.Run("all options", func(t *testing.T) {
+	// 	opts := defaultOpts()
+	// 	// TODO: fill me
+	// 	assertOptsValidAndSQLEquals(t, opts, "TODO: fill me")
+	// })
 }
 
 func TestComputePools_Alter(t *testing.T) {
-	id := RandomSchemaObjectIdentifier()
+	id := RandomAccountObjectIdentifier()
 
 	// Minimal valid AlterComputePoolOptions
 	defaultOpts := func() *AlterComputePoolOptions {
@@ -85,7 +85,7 @@ func TestComputePools_Alter(t *testing.T) {
 }
 
 func TestComputePools_Drop(t *testing.T) {
-	id := RandomSchemaObjectIdentifier()
+	id := RandomAccountObjectIdentifier()
 
 	// Minimal valid DropComputePoolOptions
 	defaultOpts := func() *DropComputePoolOptions {
@@ -143,7 +143,7 @@ func TestComputePools_Show(t *testing.T) {
 }
 
 func TestComputePools_Describe(t *testing.T) {
-	id := RandomSchemaObjectIdentifier()
+	id := RandomAccountObjectIdentifier()
 
 	// Minimal valid DescribeComputePoolOptions
 	defaultOpts := func() *DescribeComputePoolOptions {

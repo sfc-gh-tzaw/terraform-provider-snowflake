@@ -5,7 +5,7 @@ package sdk
 import ()
 
 func NewCreateComputePoolRequest(
-	name SchemaObjectIdentifier,
+	name AccountObjectIdentifier,
 	MinNodes int,
 	MaxNodes int,
 	InstanceFamily string,
@@ -44,7 +44,7 @@ func (s *CreateComputePoolRequest) WithComment(Comment *string) *CreateComputePo
 }
 
 func NewAlterComputePoolRequest(
-	name SchemaObjectIdentifier,
+	name AccountObjectIdentifier,
 ) *AlterComputePoolRequest {
 	s := AlterComputePoolRequest{}
 	s.name = name
@@ -106,7 +106,7 @@ func (s *PropertiesToAlterRequest) WithComment(Comment *string) *PropertiesToAlt
 }
 
 func NewDropComputePoolRequest(
-	name SchemaObjectIdentifier,
+	name AccountObjectIdentifier,
 ) *DropComputePoolRequest {
 	s := DropComputePoolRequest{}
 	s.name = name
@@ -138,7 +138,7 @@ func (s *ShowComputePoolRequest) WithLimit(Limit *LimitFrom) *ShowComputePoolReq
 }
 
 func NewDescribeComputePoolRequest(
-	name SchemaObjectIdentifier,
+	name AccountObjectIdentifier,
 ) *DescribeComputePoolRequest {
 	s := DescribeComputePoolRequest{}
 	s.name = name

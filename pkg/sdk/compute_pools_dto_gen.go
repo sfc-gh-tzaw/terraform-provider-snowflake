@@ -12,10 +12,10 @@ var (
 
 type CreateComputePoolRequest struct {
 	IfNotExists        *bool
-	name               SchemaObjectIdentifier // required
-	MinNodes           int                    // required
-	MaxNodes           int                    // required
-	InstanceFamily     string                 // required
+	name               AccountObjectIdentifier // required
+	MinNodes           int                     // required
+	MaxNodes           int                     // required
+	InstanceFamily     string                  // required
 	AutoResume         *bool
 	InitiallySuspended *bool
 	AutoSuspendSecs    *int
@@ -24,7 +24,7 @@ type CreateComputePoolRequest struct {
 
 type AlterComputePoolRequest struct {
 	IfExists *bool
-	name     SchemaObjectIdentifier // required
+	name     AccountObjectIdentifier // required
 	Suspend  *bool
 	Resume   *bool
 	StopAll  *bool
@@ -41,7 +41,7 @@ type PropertiesToAlterRequest struct {
 
 type DropComputePoolRequest struct {
 	IfExists *bool
-	name     SchemaObjectIdentifier // required
+	name     AccountObjectIdentifier // required
 }
 
 type ShowComputePoolRequest struct {
@@ -51,5 +51,5 @@ type ShowComputePoolRequest struct {
 }
 
 type DescribeComputePoolRequest struct {
-	name SchemaObjectIdentifier // required
+	name AccountObjectIdentifier // required
 }

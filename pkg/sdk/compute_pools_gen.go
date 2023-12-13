@@ -10,35 +10,35 @@ type ComputePools interface {
 	Alter(ctx context.Context, request *AlterComputePoolRequest) error
 	Drop(ctx context.Context, request *DropComputePoolRequest) error
 	Show(ctx context.Context, request *ShowComputePoolRequest) ([]ComputePool, error)
-	ShowByID(ctx context.Context, id SchemaObjectIdentifier) (*ComputePool, error)
-	Describe(ctx context.Context, id SchemaObjectIdentifier) (*ComputePool, error)
+	ShowByID(ctx context.Context, id AccountObjectIdentifier) (*ComputePool, error)
+	Describe(ctx context.Context, id AccountObjectIdentifier) (*ComputePool, error)
 }
 
 // CreateComputePoolOptions is based on https://docs.snowflake.com/en/LIMITEDACCESS/snowpark-containers/reference/compute-pool#create-compute-pool.
 type CreateComputePoolOptions struct {
-	create             bool                   `ddl:"static" sql:"CREATE"`
-	computePool        bool                   `ddl:"static" sql:"COMPUTE POOL"`
-	IfNotExists        *bool                  `ddl:"keyword" sql:"IF NOT EXISTS"`
-	name               SchemaObjectIdentifier `ddl:"identifier"`
-	MinNodes           int                    `ddl:"parameter,no_quotes" sql:"MIN_NODES"`
-	MaxNodes           int                    `ddl:"parameter,no_quotes" sql:"MAX_NODES"`
-	InstanceFamily     string                 `ddl:"parameter,no_quotes" sql:"INSTANCE_FAMILY"`
-	AutoResume         *bool                  `ddl:"parameter" sql:"AUTO_RESUME"`
-	InitiallySuspended *bool                  `ddl:"parameter" sql:"INITIALLY_SUSPENDED"`
-	AutoSuspendSecs    *int                   `ddl:"parameter,no_quotes" sql:"AUTO_SUSPEND_SECS"`
-	Comment            *string                `ddl:"parameter,single_quotes" sql:"COMMENT"`
+	create             bool                    `ddl:"static" sql:"CREATE"`
+	computePool        bool                    `ddl:"static" sql:"COMPUTE POOL"`
+	IfNotExists        *bool                   `ddl:"keyword" sql:"IF NOT EXISTS"`
+	name               AccountObjectIdentifier `ddl:"identifier"`
+	MinNodes           int                     `ddl:"parameter,no_quotes" sql:"MIN_NODES"`
+	MaxNodes           int                     `ddl:"parameter,no_quotes" sql:"MAX_NODES"`
+	InstanceFamily     string                  `ddl:"parameter,no_quotes" sql:"INSTANCE_FAMILY"`
+	AutoResume         *bool                   `ddl:"parameter" sql:"AUTO_RESUME"`
+	InitiallySuspended *bool                   `ddl:"parameter" sql:"INITIALLY_SUSPENDED"`
+	AutoSuspendSecs    *int                    `ddl:"parameter,no_quotes" sql:"AUTO_SUSPEND_SECS"`
+	Comment            *string                 `ddl:"parameter,single_quotes" sql:"COMMENT"`
 }
 
 // AlterComputePoolOptions is based on https://docs.snowflake.com/en/LIMITEDACCESS/snowpark-containers/reference/compute-pool#alter-compute-pool.
 type AlterComputePoolOptions struct {
-	alter       bool                   `ddl:"static" sql:"ALTER"`
-	computePool bool                   `ddl:"static" sql:"COMPUTE POOL"`
-	IfExists    *bool                  `ddl:"keyword" sql:"IF EXISTS"`
-	name        SchemaObjectIdentifier `ddl:"identifier"`
-	Suspend     *bool                  `ddl:"keyword" sql:"SUSPEND"`
-	Resume      *bool                  `ddl:"keyword" sql:"RESUME"`
-	StopAll     *bool                  `ddl:"keyword" sql:"STOP ALL"`
-	Set         *PropertiesToAlter     `ddl:"keyword" sql:"SET"`
+	alter       bool                    `ddl:"static" sql:"ALTER"`
+	computePool bool                    `ddl:"static" sql:"COMPUTE POOL"`
+	IfExists    *bool                   `ddl:"keyword" sql:"IF EXISTS"`
+	name        AccountObjectIdentifier `ddl:"identifier"`
+	Suspend     *bool                   `ddl:"keyword" sql:"SUSPEND"`
+	Resume      *bool                   `ddl:"keyword" sql:"RESUME"`
+	StopAll     *bool                   `ddl:"keyword" sql:"STOP ALL"`
+	Set         *PropertiesToAlter      `ddl:"keyword" sql:"SET"`
 }
 
 type PropertiesToAlter struct {
@@ -51,10 +51,10 @@ type PropertiesToAlter struct {
 
 // DropComputePoolOptions is based on https://docs.snowflake.com/en/LIMITEDACCESS/snowpark-containers/reference/compute-pool#drop-compute-pool.
 type DropComputePoolOptions struct {
-	drop        bool                   `ddl:"static" sql:"DROP"`
-	computePool bool                   `ddl:"static" sql:"COMPUTE POOL"`
-	IfExists    *bool                  `ddl:"keyword" sql:"IF EXISTS"`
-	name        SchemaObjectIdentifier `ddl:"identifier"`
+	drop        bool                    `ddl:"static" sql:"DROP"`
+	computePool bool                    `ddl:"static" sql:"COMPUTE POOL"`
+	IfExists    *bool                   `ddl:"keyword" sql:"IF EXISTS"`
+	name        AccountObjectIdentifier `ddl:"identifier"`
 }
 
 // ShowComputePoolOptions is based on https://docs.snowflake.com/en/LIMITEDACCESS/snowpark-containers/reference/compute-pool#show-compute-pools.
@@ -106,7 +106,7 @@ type ComputePool struct {
 
 // DescribeComputePoolOptions is based on https://docs.snowflake.com/en/LIMITEDACCESS/snowpark-containers/reference/compute-pool#describe-compute-pool.
 type DescribeComputePoolOptions struct {
-	describe    bool                   `ddl:"static" sql:"DESCRIBE"`
-	computePool bool                   `ddl:"static" sql:"COMPUTE POOL"`
-	name        SchemaObjectIdentifier `ddl:"identifier"`
+	describe    bool                    `ddl:"static" sql:"DESCRIBE"`
+	computePool bool                    `ddl:"static" sql:"COMPUTE POOL"`
+	name        AccountObjectIdentifier `ddl:"identifier"`
 }

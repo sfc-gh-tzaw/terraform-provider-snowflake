@@ -66,7 +66,7 @@ func ReadComputePools(d *schema.ResourceData, meta interface{}) error {
 		return nil
 	}
 
-	computePools := make([]map[string]any, 0, len(extractedComputePools))
+	computePools := make([]map[string]any, len(extractedComputePools))
 	for i, computePool := range extractedComputePools {
 		computePools[i] = map[string]any{
 			"name":            computePool.Name,

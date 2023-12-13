@@ -494,6 +494,7 @@ func getDataSources() map[string]*schema.Resource {
 	dataSources := map[string]*schema.Resource{
 		"snowflake_accounts":                           datasources.Accounts(),
 		"snowflake_alerts":                             datasources.Alerts(),
+		"snowflake_compute_pools":                      datasources.ComputePools(),
 		"snowflake_current_account":                    datasources.CurrentAccount(),
 		"snowflake_current_role":                       datasources.CurrentRole(),
 		"snowflake_database":                           datasources.Database(),

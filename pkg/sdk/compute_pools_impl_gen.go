@@ -37,7 +37,7 @@ func (v *computePools) Show(ctx context.Context, request *ShowComputePoolRequest
 	return resultList, nil
 }
 
-func (v *computePools) ShowByID(ctx context.Context, id SchemaObjectIdentifier) (*ComputePool, error) {
+func (v *computePools) ShowByID(ctx context.Context, id AccountObjectIdentifier) (*ComputePool, error) {
 	request := NewShowComputePoolRequest().WithLike(&Like{String(id.Name())})
 	computePools, err := v.Show(ctx, request)
 	if err != nil {
@@ -46,7 +46,7 @@ func (v *computePools) ShowByID(ctx context.Context, id SchemaObjectIdentifier) 
 	return collections.FindOne(computePools, func(r ComputePool) bool { return r.Name == id.Name() })
 }
 
-func (v *computePools) Describe(ctx context.Context, id SchemaObjectIdentifier) (*ComputePool, error) {
+func (v *computePools) Describe(ctx context.Context, id AccountObjectIdentifier) (*ComputePool, error) {
 	opts := &DescribeComputePoolOptions{
 		name: id,
 	}
