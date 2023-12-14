@@ -233,44 +233,63 @@ func UpdateComputePool(d *schema.ResourceData, meta interface{}) error {
 	ctx := context.Background()
 
 	id := helpers.DecodeSnowflakeID(d.Id()).(sdk.AccountObjectIdentifier)
-	alterRequest := sdk.NewAlterComputePoolRequest(id)
-	propsToAlterRequest := sdk.NewAlterSetPropertiesRequest()
+
+	alterSetPropsRequest := sdk.NewAlterSetPropertiesRequest()
 	needSet := false
+
+	alterUnsetPropsRequest := sdk.NewAlterUnsetPropertiesRequest()
+	needUnset := false
 
 	if d.HasChange("min_nodes") {
 		minNodes := d.Get("min_nodes").(int)
 		needSet = true
-		propsToAlterRequest.WithMinNodes(sdk.Int(minNodes))
+		alterSetPropsRequest.WithMinNodes(sdk.Int(minNodes))
 	}
 
 	if d.HasChange("max_nodes") {
 		maxNodes := d.Get("max_nodes").(int)
 		needSet = true
-		propsToAlterRequest.WithMaxNodes(sdk.Int(maxNodes))
+		alterSetPropsRequest.WithMaxNodes(sdk.Int(maxNodes))
 	}
 
 	if d.HasChange("auto_resume") {
-		autoResume := d.Get("auto_resume").(bool)
-		needSet = true
-		propsToAlterRequest.WithAutoResume(sdk.Bool(autoResume))
+		if v, ok := d.GetOk("auto_resume"); ok {
+			needSet = true
+			alterSetPropsRequest.WithAutoResume(sdk.Bool(v.(bool)))
+		} else {
+			needUnset = true
+			alterUnsetPropsRequest.WithAutoResume(sdk.Bool(true))
+		}
 	}
 
 	if d.HasChange("auto_suspend_secs") {
-		autoResumeSecs := d.Get("auto_suspend_secs").(int)
-		needSet = true
-		propsToAlterRequest.WithAutoSuspendSecs(sdk.Int(autoResumeSecs))
+		if v, ok := d.GetOk("auto_suspend_secs"); ok {
+			needSet = true
+			alterSetPropsRequest.WithAutoSuspendSecs(sdk.Int(v.(int)))
+		} else {
+			needUnset = true
+			alterUnsetPropsRequest.WithAutoSuspendSecs(sdk.Bool(true))
+		}
 	}
 
 	if d.HasChange("comment") {
-		// should add unset bc of empty string?
-		comment := d.Get("comment").(string)
-		needSet = true
-		propsToAlterRequest.WithComment(sdk.String(comment))
+		if v, ok := d.GetOk("comment"); ok {
+			needSet = true
+			alterSetPropsRequest.WithComment(sdk.String(v.(string)))
+		} else {
+			needUnset = true
+			alterUnsetPropsRequest.WithComment(sdk.Bool(true))
+		}
+	}
+
+	if needUnset {
+		if err := client.ComputePools.Alter(ctx, sdk.NewAlterComputePoolRequest(id).WithUnset(alterUnsetPropsRequest)); err != nil {
+			return err
+		}
 	}
 
 	if needSet {
-		alterRequest.WithSet(propsToAlterRequest)
-		if err := client.ComputePools.Alter(ctx, alterRequest); err != nil {
+		if err := client.ComputePools.Alter(ctx, sdk.NewAlterComputePoolRequest(id).WithSet(alterSetPropsRequest)); err != nil {
 			return err
 		}
 	}
