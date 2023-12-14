@@ -94,11 +94,11 @@ var computePoolSchema = map[string]*schema.Schema{
 	// 	Computed:    true,
 	// 	Description: "Time pool resumed.",
 	// },
-	// "updated_on": {
-	// 	Type:        schema.TypeString,
-	// 	Computed:    true,
-	// 	Description: "Time pool updated.",
-	// },
+	"updated_on": {
+		Type:        schema.TypeString,
+		Computed:    true,
+		Description: "Time pool updated.",
+	},
 	"owner": {
 		Type:        schema.TypeString,
 		Computed:    true,
@@ -213,9 +213,9 @@ func ReadComputePool(d *schema.ResourceData, meta interface{}) error {
 	// if err = d.Set("resumed_on", c.ResumedOn); err != nil {
 	// 	return err
 	// }
-	// if err = d.Set("updated_on", c.UpdatedOn); err != nil {
-	// 	return err
-	// }
+	if err = d.Set("updated_on", c.UpdatedOn.Format("2006-01-02T16:04:05.000 -0700")); err != nil {
+		return err
+	}
 	if err = d.Set("owner", c.Owner); err != nil {
 		return err
 	}
