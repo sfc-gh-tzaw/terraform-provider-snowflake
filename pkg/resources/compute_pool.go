@@ -38,17 +38,20 @@ var computePoolSchema = map[string]*schema.Schema{
 	"auto_resume": { // technically has a default value, but unsure if we also have to add it to terraform spec
 		Type:        schema.TypeBool,
 		Optional:    true,
+		Default:     true, // if unset, it won't be part of the create sql - but if set & unset, we should just unset target, no? so this is useless
 		Description: "Whether to automatically resume a compute pool when a service or job is submitted to it.",
 	},
 	"initially_suspended": {
 		Type:        schema.TypeBool,
 		Optional:    true,
+		Default:     false,
 		ForceNew:    true,
 		Description: "Whether the compute pool is created initially in the suspended state.",
 	},
 	"auto_suspend_secs": {
 		Type:        schema.TypeInt,
 		Optional:    true,
+		Default:     600, // docs claim 3600 but not observed
 		Description: "Number of seconds of inactivity after which pool suspends.",
 	},
 	"comment": {
