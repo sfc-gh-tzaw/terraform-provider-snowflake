@@ -135,7 +135,7 @@ func CreateComputePool(d *schema.ResourceData, meta interface{}) error {
 
 	createRequest := sdk.NewCreateComputePoolRequest(objectIdentifier, minNodes, maxNodes, instanceFamily)
 
-	if v, ok := d.GetOk("auto_resume"); ok { // can also just use .Get() since the default will be false, but should be explicit methinks
+	if v, ok := d.GetOk("auto_resume"); ok {
 		createRequest.WithAutoResume(sdk.Bool(v.(bool)))
 	}
 
@@ -150,8 +150,6 @@ func CreateComputePool(d *schema.ResourceData, meta interface{}) error {
 	if v, ok := d.GetOk("comment"); ok {
 		createRequest.WithComment(sdk.String(v.(string)))
 	}
-
-	// should consider if "if not exists" makes sense in terraform - methinks not, since that's the point lol
 
 	if err := client.ComputePools.Create(ctx, createRequest); err != nil {
 		return err
