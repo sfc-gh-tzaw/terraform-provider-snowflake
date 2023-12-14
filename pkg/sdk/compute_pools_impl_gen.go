@@ -39,7 +39,7 @@ func (v *computePools) Show(ctx context.Context, request *ShowComputePoolRequest
 
 func (v *computePools) ShowByID(ctx context.Context, id AccountObjectIdentifier) (*ComputePool, error) {
 	// TODO: adjust request if e.g. LIKE is supported for the resource
-	computePools, err := v.Show(ctx, NewShowComputePoolRequest())
+	computePools, err := v.Show(ctx, NewShowComputePoolRequest().WithLike(&Like{String(id.Name())}))
 	if err != nil {
 		return nil, err
 	}
