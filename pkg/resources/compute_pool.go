@@ -234,7 +234,7 @@ func UpdateComputePool(d *schema.ResourceData, meta interface{}) error {
 
 	id := helpers.DecodeSnowflakeID(d.Id()).(sdk.AccountObjectIdentifier)
 	alterRequest := sdk.NewAlterComputePoolRequest(id)
-	propsToAlterRequest := sdk.NewPropertiesToAlterRequest()
+	propsToAlterRequest := sdk.NewAlterSetPropertiesRequest()
 	needSet := false
 
 	if d.HasChange("min_nodes") {

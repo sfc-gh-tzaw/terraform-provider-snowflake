@@ -39,15 +39,22 @@ type AlterComputePoolOptions struct {
 	Suspend     *bool                   `ddl:"keyword" sql:"SUSPEND"`
 	Resume      *bool                   `ddl:"keyword" sql:"RESUME"`
 	StopAll     *bool                   `ddl:"keyword" sql:"STOP ALL"`
-	Set         *PropertiesToAlter      `ddl:"keyword" sql:"SET"`
+	Set         *AlterSetProperties     `ddl:"keyword" sql:"SET"`
+	Unset       *AlterUnsetProperties   `ddl:"keyword" sql:"UNSET"`
 }
 
-type PropertiesToAlter struct {
+type AlterSetProperties struct {
 	MinNodes        *int    `ddl:"parameter,no_quotes" sql:"MIN_NODES"`
 	MaxNodes        *int    `ddl:"parameter,no_quotes" sql:"MAX_NODES"`
 	AutoResume      *bool   `ddl:"parameter" sql:"AUTO_RESUME"`
 	AutoSuspendSecs *int    `ddl:"parameter,no_quotes" sql:"AUTO_SUSPEND_SECS"`
 	Comment         *string `ddl:"parameter,single_quotes" sql:"COMMENT"`
+}
+
+type AlterUnsetProperties struct {
+	AutoSuspendSecs *bool `ddl:"keyword" sql:"AUTO_SUSPEND_SECS"`
+	AutoResume      *bool `ddl:"keyword" sql:"AUTO_RESUME"`
+	Comment         *bool `ddl:"keyword" sql:"COMMENT"`
 }
 
 // DropComputePoolOptions is based on https://docs.snowflake.com/en/LIMITEDACCESS/snowpark-containers/reference/compute-pool#drop-compute-pool.

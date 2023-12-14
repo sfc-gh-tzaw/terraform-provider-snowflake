@@ -28,15 +28,22 @@ type AlterComputePoolRequest struct {
 	Suspend  *bool
 	Resume   *bool
 	StopAll  *bool
-	Set      *PropertiesToAlterRequest
+	Set      *AlterSetPropertiesRequest
+	Unset    *AlterUnsetPropertiesRequest
 }
 
-type PropertiesToAlterRequest struct {
+type AlterSetPropertiesRequest struct {
 	MinNodes        *int
 	MaxNodes        *int
 	AutoResume      *bool
 	AutoSuspendSecs *int
 	Comment         *string
+}
+
+type AlterUnsetPropertiesRequest struct {
+	AutoSuspendSecs *bool
+	AutoResume      *bool
+	Comment         *bool
 }
 
 type DropComputePoolRequest struct {

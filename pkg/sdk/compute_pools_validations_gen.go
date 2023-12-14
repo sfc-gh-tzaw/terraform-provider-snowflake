@@ -27,8 +27,18 @@ func (opts *AlterComputePoolOptions) validate() error {
 	if !ValidObjectIdentifier(opts.name) {
 		errs = append(errs, ErrInvalidObjectIdentifier)
 	}
-	if !exactlyOneValueSet(opts.Suspend, opts.Resume, opts.StopAll, opts.Set) {
-		errs = append(errs, errExactlyOneOf("AlterComputePoolOptions", "Suspend", "Resume", "StopAll", "Set"))
+	if !exactlyOneValueSet(opts.Suspend, opts.Resume, opts.StopAll, opts.Set, opts.Unset) {
+		errs = append(errs, errExactlyOneOf("AlterComputePoolOptions", "Suspend", "Resume", "StopAll", "Set", "Unset"))
+	}
+	if valueSet(opts.Set) {
+		if !anyValueSet(opts.Set.MinNodes, opts.Set.MaxNodes, opts.Set.AutoResume, opts.Set.AutoSuspendSecs, opts.Set.Comment) {
+			errs = append(errs, errAtLeastOneOf("AlterComputePoolOptions.Set", "MinNodes", "MaxNodes", "AutoResume", "AutoSuspendSecs", "Comment"))
+		}
+	}
+	if valueSet(opts.Unset) {
+		if !anyValueSet(opts.Unset.AutoSuspendSecs, opts.Unset.AutoResume, opts.Unset.Comment) {
+			errs = append(errs, errAtLeastOneOf("AlterComputePoolOptions.Unset", "AutoSuspendSecs", "AutoResume", "Comment"))
+		}
 	}
 	return JoinErrors(errs...)
 }

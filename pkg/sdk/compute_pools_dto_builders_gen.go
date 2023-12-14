@@ -71,36 +71,60 @@ func (s *AlterComputePoolRequest) WithStopAll(StopAll *bool) *AlterComputePoolRe
 	return s
 }
 
-func (s *AlterComputePoolRequest) WithSet(Set *PropertiesToAlterRequest) *AlterComputePoolRequest {
+func (s *AlterComputePoolRequest) WithSet(Set *AlterSetPropertiesRequest) *AlterComputePoolRequest {
 	s.Set = Set
 	return s
 }
 
-func NewPropertiesToAlterRequest() *PropertiesToAlterRequest {
-	return &PropertiesToAlterRequest{}
+func (s *AlterComputePoolRequest) WithUnset(Unset *AlterUnsetPropertiesRequest) *AlterComputePoolRequest {
+	s.Unset = Unset
+	return s
 }
 
-func (s *PropertiesToAlterRequest) WithMinNodes(MinNodes *int) *PropertiesToAlterRequest {
+func NewAlterSetPropertiesRequest() *AlterSetPropertiesRequest {
+	return &AlterSetPropertiesRequest{}
+}
+
+func (s *AlterSetPropertiesRequest) WithMinNodes(MinNodes *int) *AlterSetPropertiesRequest {
 	s.MinNodes = MinNodes
 	return s
 }
 
-func (s *PropertiesToAlterRequest) WithMaxNodes(MaxNodes *int) *PropertiesToAlterRequest {
+func (s *AlterSetPropertiesRequest) WithMaxNodes(MaxNodes *int) *AlterSetPropertiesRequest {
 	s.MaxNodes = MaxNodes
 	return s
 }
 
-func (s *PropertiesToAlterRequest) WithAutoResume(AutoResume *bool) *PropertiesToAlterRequest {
+func (s *AlterSetPropertiesRequest) WithAutoResume(AutoResume *bool) *AlterSetPropertiesRequest {
 	s.AutoResume = AutoResume
 	return s
 }
 
-func (s *PropertiesToAlterRequest) WithAutoSuspendSecs(AutoSuspendSecs *int) *PropertiesToAlterRequest {
+func (s *AlterSetPropertiesRequest) WithAutoSuspendSecs(AutoSuspendSecs *int) *AlterSetPropertiesRequest {
 	s.AutoSuspendSecs = AutoSuspendSecs
 	return s
 }
 
-func (s *PropertiesToAlterRequest) WithComment(Comment *string) *PropertiesToAlterRequest {
+func (s *AlterSetPropertiesRequest) WithComment(Comment *string) *AlterSetPropertiesRequest {
+	s.Comment = Comment
+	return s
+}
+
+func NewAlterUnsetPropertiesRequest() *AlterUnsetPropertiesRequest {
+	return &AlterUnsetPropertiesRequest{}
+}
+
+func (s *AlterUnsetPropertiesRequest) WithAutoSuspendSecs(AutoSuspendSecs *bool) *AlterUnsetPropertiesRequest {
+	s.AutoSuspendSecs = AutoSuspendSecs
+	return s
+}
+
+func (s *AlterUnsetPropertiesRequest) WithAutoResume(AutoResume *bool) *AlterUnsetPropertiesRequest {
+	s.AutoResume = AutoResume
+	return s
+}
+
+func (s *AlterUnsetPropertiesRequest) WithComment(Comment *bool) *AlterUnsetPropertiesRequest {
 	s.Comment = Comment
 	return s
 }

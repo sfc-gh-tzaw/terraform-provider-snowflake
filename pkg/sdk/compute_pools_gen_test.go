@@ -1,14 +1,10 @@
 package sdk
 
-import (
-	"fmt"
-	"testing"
-)
+import "testing"
 
 func TestComputePools_Create(t *testing.T) {
 	id := RandomAccountObjectIdentifier()
 
-	fmt.Println(id.FullyQualifiedName())
 	// Minimal valid CreateComputePoolOptions
 	defaultOpts := func() *CreateComputePoolOptions {
 		return &CreateComputePoolOptions{
@@ -65,10 +61,22 @@ func TestComputePools_Alter(t *testing.T) {
 		assertOptsInvalidJoinedErrors(t, opts, ErrInvalidObjectIdentifier)
 	})
 
-	t.Run("validation: exactly one field from [opts.Suspend opts.Resume opts.StopAll opts.Set] should be present", func(t *testing.T) {
+	t.Run("validation: exactly one field from [opts.Suspend opts.Resume opts.StopAll opts.Set opts.Unset] should be present", func(t *testing.T) {
 		opts := defaultOpts()
 		// TODO: fill me
-		assertOptsInvalidJoinedErrors(t, opts, errExactlyOneOf("AlterComputePoolOptions", "Suspend", "Resume", "StopAll", "Set"))
+		assertOptsInvalidJoinedErrors(t, opts, errExactlyOneOf("AlterComputePoolOptions", "Suspend", "Resume", "StopAll", "Set", "Unset"))
+	})
+
+	t.Run("validation: at least one of the fields [opts.Set.MinNodes opts.Set.MaxNodes opts.Set.AutoResume opts.Set.AutoSuspendSecs opts.Set.Comment] should be set", func(t *testing.T) {
+		opts := defaultOpts()
+		// TODO: fill me
+		assertOptsInvalidJoinedErrors(t, opts, errAtLeastOneOf("AlterComputePoolOptions.Set", "MinNodes", "MaxNodes", "AutoResume", "AutoSuspendSecs", "Comment"))
+	})
+
+	t.Run("validation: at least one of the fields [opts.Unset.AutoSuspendSecs opts.Unset.AutoResume opts.Unset.Comment] should be set", func(t *testing.T) {
+		opts := defaultOpts()
+		// TODO: fill me
+		assertOptsInvalidJoinedErrors(t, opts, errAtLeastOneOf("AlterComputePoolOptions.Unset", "AutoSuspendSecs", "AutoResume", "Comment"))
 	})
 
 	t.Run("basic", func(t *testing.T) {

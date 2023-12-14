@@ -4,12 +4,19 @@ import g "github.com/Snowflake-Labs/terraform-provider-snowflake/pkg/sdk/poc/gen
 
 //go:generate go run ./poc/main.go
 
-var propertiesToAlter = g.NewQueryStruct("PropertiesToAlter").
+var alterSetProperties = g.NewQueryStruct("AlterSetProperties").
 	OptionalNumberAssignment("MIN_NODES", g.ParameterOptions().NoQuotes()).
 	OptionalNumberAssignment("MAX_NODES", g.ParameterOptions().NoQuotes()).
 	OptionalBooleanAssignment("AUTO_RESUME", g.ParameterOptions()).
 	OptionalNumberAssignment("AUTO_SUSPEND_SECS", g.ParameterOptions().NoQuotes()).
-	OptionalTextAssignment("COMMENT", g.ParameterOptions().SingleQuotes())
+	OptionalTextAssignment("COMMENT", g.ParameterOptions().SingleQuotes()).
+	WithValidation(g.AtLeastOneValueSet, "MinNodes", "MaxNodes", "AutoResume", "AutoSuspendSecs", "Comment")
+
+var alterUnsetProperties = g.NewQueryStruct("AlterUnsetProperties").
+	OptionalSQL("AUTO_SUSPEND_SECS").
+	OptionalSQL("AUTO_RESUME").
+	OptionalSQL("COMMENT").
+	WithValidation(g.AtLeastOneValueSet, "AutoSuspendSecs", "AutoResume", "Comment")
 
 var computePoolDbRow = g.DbStruct("computePoolDBRow").
 	Field("name", "string").
@@ -78,11 +85,16 @@ var ComputePoolsDef = g.NewInterface(
 		OptionalSQL("STOP ALL").
 		OptionalQueryStructField(
 			"Set",
-			propertiesToAlter,
+			alterSetProperties,
 			g.KeywordOptions().SQL("SET"),
 		).
+		OptionalQueryStructField(
+			"Unset",
+			alterUnsetProperties,
+			g.KeywordOptions().SQL("UNSET"),
+		).
 		WithValidation(g.ValidIdentifier, "name").
-		WithValidation(g.ExactlyOneValueSet, "Suspend", "Resume", "StopAll", "Set"),
+		WithValidation(g.ExactlyOneValueSet, "Suspend", "Resume", "StopAll", "Set", "Unset"),
 ).
 	DropOperation(
 		"https://docs.snowflake.com/en/LIMITEDACCESS/snowpark-containers/reference/compute-pool#drop-compute-pool",

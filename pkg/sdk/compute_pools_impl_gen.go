@@ -38,7 +38,6 @@ func (v *computePools) Show(ctx context.Context, request *ShowComputePoolRequest
 }
 
 func (v *computePools) ShowByID(ctx context.Context, id AccountObjectIdentifier) (*ComputePool, error) {
-	// TODO: adjust request if e.g. LIKE is supported for the resource
 	computePools, err := v.Show(ctx, NewShowComputePoolRequest().WithLike(&Like{String(id.Name())}))
 	if err != nil {
 		return nil, err
@@ -81,12 +80,19 @@ func (r *AlterComputePoolRequest) toOpts() *AlterComputePoolOptions {
 		StopAll:  r.StopAll,
 	}
 	if r.Set != nil {
-		opts.Set = &PropertiesToAlter{
+		opts.Set = &AlterSetProperties{
 			MinNodes:        r.Set.MinNodes,
 			MaxNodes:        r.Set.MaxNodes,
 			AutoResume:      r.Set.AutoResume,
 			AutoSuspendSecs: r.Set.AutoSuspendSecs,
 			Comment:         r.Set.Comment,
+		}
+	}
+	if r.Unset != nil {
+		opts.Unset = &AlterUnsetProperties{
+			AutoSuspendSecs: r.Unset.AutoSuspendSecs,
+			AutoResume:      r.Unset.AutoResume,
+			Comment:         r.Unset.Comment,
 		}
 	}
 	return opts
