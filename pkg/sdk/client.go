@@ -28,39 +28,40 @@ type Client struct {
 	ReplicationFunctions ReplicationFunctions
 
 	// DDL Commands
-	Accounts         Accounts
-	Alerts           Alerts
-	ApplicationRoles ApplicationRoles
-	Comments         Comments
-	ComputePools     ComputePools
-	DatabaseRoles    DatabaseRoles
-	Databases        Databases
-	DynamicTables    DynamicTables
-	ExternalTables   ExternalTables
-	EventTables      EventTables
-	FailoverGroups   FailoverGroups
-	FileFormats      FileFormats
-	Grants           Grants
-	MaskingPolicies  MaskingPolicies
-	NetworkPolicies  NetworkPolicies
-	Parameters       Parameters
-	PasswordPolicies PasswordPolicies
-	Pipes            Pipes
-	Procedures       Procedures
-	ResourceMonitors ResourceMonitors
-	Roles            Roles
-	Schemas          Schemas
-	SessionPolicies  SessionPolicies
-	Sessions         Sessions
-	Shares           Shares
-	Stages           Stages
-	Streams          Streams
-	Tables           Tables
-	Tags             Tags
-	Tasks            Tasks
-	Users            Users
-	Views            Views
-	Warehouses       Warehouses
+	Accounts          Accounts
+	Alerts            Alerts
+	ApplicationRoles  ApplicationRoles
+	Comments          Comments
+	ComputePools      ComputePools
+	DatabaseRoles     DatabaseRoles
+	Databases         Databases
+	DynamicTables     DynamicTables
+	ExternalTables    ExternalTables
+	EventTables       EventTables
+	FailoverGroups    FailoverGroups
+	FileFormats       FileFormats
+	Grants            Grants
+	ImageRepositories ImageRepositories
+	MaskingPolicies   MaskingPolicies
+	NetworkPolicies   NetworkPolicies
+	Parameters        Parameters
+	PasswordPolicies  PasswordPolicies
+	Pipes             Pipes
+	Procedures        Procedures
+	ResourceMonitors  ResourceMonitors
+	Roles             Roles
+	Schemas           Schemas
+	SessionPolicies   SessionPolicies
+	Sessions          Sessions
+	Shares            Shares
+	Stages            Stages
+	Streams           Streams
+	Tables            Tables
+	Tags              Tags
+	Tasks             Tasks
+	Users             Users
+	Views             Views
+	Warehouses        Warehouses
 }
 
 func (c *Client) GetAccountLocator() string {
@@ -172,6 +173,7 @@ func (c *Client) initialize() {
 	c.FailoverGroups = &failoverGroups{client: c}
 	c.FileFormats = &fileFormats{client: c}
 	c.Grants = &grants{client: c}
+	c.ImageRepositories = &imageRepositories{client: c}
 	c.MaskingPolicies = &maskingPolicies{client: c}
 	c.NetworkPolicies = &networkPolicies{client: c}
 	c.Parameters = &parameters{client: c}
